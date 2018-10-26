@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 25 Septembre 2018 à 16:35
+-- Généré le :  Lun 22 Octobre 2018 à 08:20
 -- Version du serveur :  5.7.23-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.32-0ubuntu0.16.04.1
 
@@ -32,6 +32,19 @@ CREATE TABLE `list` (
   `project_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `list`
+--
+
+INSERT INTO `list` (`id`, `name`, `project_id`) VALUES
+(3, 'html', 8),
+(4, 'css', 8),
+(5, 'js', 8),
+(6, 'php', 8),
+(7, 'wireframe', 8),
+(15, 'wireframe', 9),
+(16, 'html', 7);
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +58,16 @@ CREATE TABLE `project` (
   `deadline` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `project`
+--
+
+INSERT INTO `project` (`id`, `name`, `content`, `deadline`) VALUES
+(7, 'azert', 'azertyuiop', '2018-11-08'),
+(8, 'toto', 'ceci est un test', '2018-11-10'),
+(9, 'azertyuiop', 'azertyuiop', '2019-01-23'),
+(12, 'Project1', 'ceci est un test', '2019-02-07');
+
 -- --------------------------------------------------------
 
 --
@@ -55,8 +78,19 @@ CREATE TABLE `task` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `list_id` int(11) NOT NULL
+  `deadline` date NOT NULL,
+  `list_id` int(11) NOT NULL,
+  `finished` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `task`
+--
+
+INSERT INTO `task` (`id`, `name`, `content`, `deadline`, `list_id`, `finished`) VALUES
+(9, 'Wireframe PC', 'Réaliser un wireframe de la version pc', '2018-12-13', 7, 0),
+(10, 'Wireframe Tablette', 'Réaliser un wireframe de la version tablette', '2018-12-13', 7, 0),
+(11, 'Wireframe Portable', 'Réaliser un wireframe de la version portable', '2018-12-13', 7, 0);
 
 --
 -- Index pour les tables exportées
@@ -90,17 +124,17 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT pour la table `list`
 --
 ALTER TABLE `list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT pour la table `project`
 --
 ALTER TABLE `project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pour la table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- Contraintes pour les tables exportées
 --

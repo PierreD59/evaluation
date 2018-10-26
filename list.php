@@ -1,16 +1,15 @@
 <?php
 require('header.php');
-require('divers/divers.php');
 try {
-    $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root', $mdp);
+  $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
 } catch (Exception $e) {
-    die('Erreur : '.$e->getcontent());
+  die('Erreur : ' . $e->getcontent());
 }
 
-  $reponse = $bdd->query('SELECT * FROM list WHERE id = "'.$_GET['id'].'" ');
-  $donnees = $reponse->fetchAll();
-  foreach ($donnees as $key => $list) {
-      ?>
+$reponse = $bdd->query('SELECT * FROM list WHERE id =' . $_GET['id']);
+$donnees = $reponse->fetchAll();
+foreach ($donnees as $key => $list) {
+?>
 
 <div class="container-fluid">
   <div class="row m-0 p-0 justify-content-center">
@@ -19,22 +18,37 @@ try {
         <p class="name">list_name : <?= $list['name']; ?></p>
           <?php
           try {
-              $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root', $mdp);
+            $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
           } catch (Exception $e) {
-              die('Erreur : '.$e->getcontent());
+            die('Erreur : ' . $e->getcontent());
           }
 
-      $reponse = $bdd->query('SELECT task.id, task.name, content, deadline, list_id FROM task WHERE task.list_id = "'.$_GET['id'].'" ');
-      $donnees = $reponse->fetchAll();
-      foreach ($donnees as $key => $task) {
-          ?>
-          <!-- Add task -->
-        <table>
-          <tr><?= $task['name'] ?></tr>
-          <td><?= $task['content'] ?></td>
-          <td><?= $task['deadline'] ?></td>
-        </table>
-  <?php } ?>
+          $reponse = $bdd->query('SELECT task.id, task.name, task.finished, content, deadline, list_id FROM task WHERE task.list_id = ' . $_GET['id']);
+          $donnees = $reponse->fetchAll();
+          foreach ($donnees as $key => $task) { ?>
+
+            <!-- Add task -->
+            <table class="finished">
+              <tr><?= $task['name']; ?></tr>
+              <td><?= $task['content']; ?></td>
+              <td><?= $task['deadline']; ?></td>
+              <td>
+                <form method="post" action="validTask.php?id=<?= $task['id'] ?>&list_id=<?= $_GET['id'] ?>">
+
+                  <?php if ($task['finished']==true) { ?>
+                      <input name="finished" type="hidden" value="0">
+                      <input name="submit" id="btn-valid" class="btn btn-success" type="submit" value="Fini">
+                  <?php } else { ?>
+                      <input name="finished" type="hidden" value="1">
+                      <input name="submit" id="btn-reset" class="btn btn-danger" type="submit" value="En cours">
+                  <?php } ?>
+
+                </form>
+              </td>   
+            </table>
+
+          <?php } ?>
+
 <?php } ?>
 
       </div>

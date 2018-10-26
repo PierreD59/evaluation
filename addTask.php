@@ -1,9 +1,8 @@
 <?php
-require('divers/divers.php');
 require('header.php');
 
 try {
-    $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root', $mdp);
+    $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
 } catch (Exception $e) {
     die('Erreur : '.$e->getMessage());
 }
@@ -14,7 +13,7 @@ $deadline = htmlspecialchars($_POST['deadline']);
 $list_id = (int)$_GET['id'];
 
 if (!empty($name) AND isset($name) AND isset($content) AND !empty($content) AND isset($deadline) AND !empty($deadline)) {
-    $req = $bdd->prepare("INSERT INTO task(name, content, deadline, list_id) VALUES(:name, :content, :deadline, :list_id)");
+    $req = $bdd->prepare("INSERT INTO task(name, content, deadline, finished, list_id) VALUES(:name, :content, :deadline, 0, :list_id)");
     $req->execute(array(
     ':name' => $name,
     ':content' => $content,
