@@ -1,10 +1,6 @@
 <?php
 require('header.php');
-try {
-  $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
-} catch (Exception $e) {
-  die('Erreur : ' . $e->getcontent());
-}
+require('bdd.php');
 
 $reponse = $bdd->query('SELECT * FROM list WHERE id =' . $_GET['id']);
 $donnees = $reponse->fetchAll();
@@ -15,15 +11,9 @@ foreach ($donnees as $key => $list) {
   <div class="row m-0 p-0 justify-content-center">
 
       <div class="spec-product col-md-4 mt-5">
-        <p class="name">list_name : <?= $list['name']; ?></p>
-          <?php
-          try {
-            $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
-          } catch (Exception $e) {
-            die('Erreur : ' . $e->getcontent());
-          }
+        <p class="name">List_name : <?= $list['name']; ?></p>
 
-          $reponse = $bdd->query('SELECT task.id, task.name, task.finished, content, deadline, list_id FROM task WHERE task.list_id = ' . $_GET['id']);
+          <?php $reponse = $bdd->query('SELECT task.id, task.name, task.finished, content, deadline, list_id FROM task WHERE task.list_id = ' . $_GET['id']);
           $donnees = $reponse->fetchAll();
           foreach ($donnees as $key => $task) { ?>
 
@@ -42,9 +32,10 @@ foreach ($donnees as $key => $list) {
                       <input name="finished" type="hidden" value="1">
                       <input name="submit" id="btn-reset" class="btn btn-danger" type="submit" value="En cours">
                   <?php } ?>
-
-                </form>
+                <!-- Delete project -->
               </td>   
+              <td><a class="btn btn-primary text-white" href="deletTask.php?id=<?= $task['id'] ?>&list_id=<?= $_GET['id'] ?>">Delet</a></td>
+              </form>
             </table>
 
           <?php } ?>

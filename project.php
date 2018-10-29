@@ -1,39 +1,6 @@
 <?php
 require('header.php');
-try
-{
-  $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
-}
-catch(Exception $e)
-{
-  die('Erreur : '.$e->getcontent());
-}
-
-  $reponse = $bdd->query('SELECT * FROM project WHERE id = "'.$_GET['id'].'" ');
-  $donnees = $reponse->fetchAll();
-  foreach ($donnees as $key => $project) { ?>
-
-<div class="container-fluid">
-  <div class="row m-0 p-0 justify-content-center">
-
-      <div class="project-img">
-        <img src="#" alt="project_img">
-        <p class="deadline-project text-center"><?= $project['deadline'];?></p>
-      </div>
-      <div class="spec-product col-md-4 m-auto">
-        <p class="name"><?= $project['name'];?></p>
-        <p class="content"><?= $project['content'];?></p>
-        <ul>
-          <?php
-
-          try
-          {
-            $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
-          }
-          catch(Exception $e)
-          {
-            die('Erreur : '.$e->getcontent());
-          }
+require('bdd.php');
 
           $reponse = $bdd->query('SELECT list.id, list.name FROM list WHERE list.project_id = "'.$_GET['id'].'" ');
           $donnees = $reponse->fetchAll();
@@ -41,8 +8,10 @@ catch(Exception $e)
 
           <!-- Add list -->
             <a href="list.php?page=list&id=<?= $list['id']; ?>"><li class="list"><?=$list['name'] ?></li></a>
+          <!-- Delete list -->
+            <a class="btn btn-primary text-white" href="deletList.php?id=<?= $list['id']; ?>">Delet</a>
+
             <?php } ?>
-          <?php } ?>
         </ul>
       </div>
   </div>

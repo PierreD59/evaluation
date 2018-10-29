@@ -1,15 +1,7 @@
 <?php
 require('header.php');
+require('bdd.php');
 
-try
-{
-  $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
-}
-
-catch(Exception $e)
-{
-  die('Erreur : '.$e->getMessage());
-}
 $name = htmlspecialchars($_POST['name']);
 $content = htmlspecialchars($_POST['content']);
 $deadline = htmlspecialchars($_POST['deadline']);

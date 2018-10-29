@@ -1,4 +1,5 @@
-<?php require('header.php'); ?>
+<?php require('header.php'); 
+require('bdd.php'); ?>
 
 <form method="post" action="addProject.php" class="mt-3">
   <p>
@@ -16,7 +17,7 @@
   <input type="submit" value="Envoyer" />
 </form>
 
-<?php $bdd = dbConnect(); // Call Database
+<?php
   $reponse = $bdd->query('SELECT * FROM project ORDER BY id');
   $donnees = $reponse->fetchAll();
 
@@ -32,32 +33,13 @@
         <a href="project.php?page=project&id=<?= $value['id']; ?>">
           <h2 class="name"><?= $value['name']; ?> </h2>
           <p class="content"><?= $value['content']; ?> </p>
-          <p class="deadline">Date limite : <?= $value['deadline']; ?></p>
+          <p class="deadline">Deadline : <?= $value['deadline']; ?></p>
         </a>
-        <!-- Delete project -->
-        <form method="post" action="deletProject.php">
-          <imput type="hidden" name="id" value="<?php echo $value['id']?>" >
-          <input type="submit" name="delete" value="Supprimer" />
-        </form>
+          <!-- Delete project -->
+            <a class="btn btn-primary text-white" href="deletProject.php?id=<?= $value['id']; ?>">Delet</a>
     </div>
   <?php } ?>
   </div>
 </div>
 
 <?php require('footer.php');
-
-// Function who call Database
-function dbConnect() {
-
-  try
-  {
-    $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
-  }
-
-  catch(Exception $e)
-  {
-    die('Erreur : '.$e->getMessage());
-  }
-  return $bdd;
-}
-?>

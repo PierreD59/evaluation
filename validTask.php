@@ -1,14 +1,5 @@
-<?php try
-  {
-    $bdd = new PDO('mysql:host=localhost;dbname=todo_list;charset=utf8', 'root');
-  }
+<?php require('bdd.php');
 
-  catch(Exception $e)
-  {
-    die('Erreur : '.$e->getMessage());
-  }
-?>
-<?php
 
 $finished = intval($_POST['finished']);
 
